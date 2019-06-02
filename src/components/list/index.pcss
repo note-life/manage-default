@@ -1,0 +1,41 @@
+.list-wrapper{
+    background: #fff;
+    border: 1px solid #dfe3e7;
+
+    & > .header{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        border-bottom: 1px solid #dfe3e7;
+
+        & > div{
+            padding: 14px 20px;
+            width: 100%;
+            font-weight: 500;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+    }
+
+    & > .body{
+
+        & > .row{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+
+            & > div{
+                padding: 14px 20px;
+                width: 100%;
+                font-size: 14px;
+                letter-spacing: 1px;
+            }
+
+            &:nth-child(2n){
+                background: rgba(223, 227, 231, 0.12);
+            }
+        }
+
+    }
+
+}

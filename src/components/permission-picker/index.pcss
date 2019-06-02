@@ -1,0 +1,37 @@
+.permission-picker{
+    display: inline-block;
+    padding: 10px 0;
+    user-select: none;
+
+    & > div{
+        display: inline-block;
+        margin: 0 12px 0 0;
+        width: 60px;
+        height: 32px;
+        line-height: 32px;
+        border: 1px solid #bbb;
+        border-radius: 4px;
+        text-align: center;
+        cursor: pointer;
+        opacity: .5;
+
+        &:hover{
+            opacity: 1;
+        }
+
+        &.actived{
+            background: #08bfad;
+            border-color: #08bfad;
+            color: #fff;
+            opacity: 1;
+        }
+
+        &:first-child{
+            pointer-events: none;
+            cursor: not-allowed;
+            background: #ff9800;
+            color: #fff;
+            border-color: #ff9800;
+        }
+    }
+}
