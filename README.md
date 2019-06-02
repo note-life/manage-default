@@ -1,4 +1,4 @@
-# NOTE.LIFE.UI (0.0.1 🧟‍)
+# manage UI (0.0.1 🧟‍)
 
 ![img](./assets/wrapper.png)
 

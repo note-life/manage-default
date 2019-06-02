@@ -61,6 +61,7 @@ class Homepage extends React.Component {
     }
 
     componentDidMount() {
+        document.title = 'NOTE.LIFE.概览';
         this.fetchSummary();
     }
 
