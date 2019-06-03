@@ -87,7 +87,7 @@ class UserDetailPage extends PureComponent {
                 email: user.email,
                 intro: user.intro,
                 avator: user.avator,
-                sites: user.sites
+                sites: user.sites.map(v => ({ name: v.name, url: v.url, icon: v.icon }))
             };
         }
 
