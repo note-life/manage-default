@@ -56,6 +56,7 @@ class UserDetailPage extends PureComponent {
         if (res.error) {
             message.error(res.error.message);
         } else {
+            res.sites = res.sites.map(v => ({...v, _id: Math.random()}))
             this.setState({ user: res });
         }
     }
