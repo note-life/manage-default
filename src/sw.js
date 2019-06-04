@@ -1,3 +1,5 @@
+importScripts("/precache-manifest.2ee754912c2aa23618b34ce2ab854d12.js", "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
+
 
 /**
  * More: 
@@ -100,5 +102,5 @@ workbox.routing.registerRoute(
  */
 workbox.routing.registerRoute(
     new RegExp('immediate.com'),
-    workbox.strategies.networkOnly()
+    new workbox.strategies.NetworkOnly()
 );
