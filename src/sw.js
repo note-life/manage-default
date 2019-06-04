@@ -1,6 +1,3 @@
-importScripts("/precache-manifest.2ee754912c2aa23618b34ce2ab854d12.js", "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
-
-
 /**
  * More: 
  *   https://developers.google.com/web/tools/workbox/
@@ -49,10 +46,10 @@ workbox.routing.registerRoute(
  * 
  * 直接使用 Cache 缓存的结果，并将结果返回给客户端，这种策略比较适合一上线就不会变的静态资源请求
  */
-workbox.routing.registerRoute(
-    new RegExp('static.com'),
-    new workbox.strategies.CacheOnly()
-);
+// workbox.routing.registerRoute(
+//     new RegExp('static.com'),
+//     new workbox.strategies.CacheOnly()
+// );
 
 
 
@@ -69,7 +66,7 @@ workbox.routing.registerRoute(
  * 适用于防止恶意调用 api
  */
 workbox.routing.registerRoute(
-    new RegExp('api.com'),
+    new RegExp('^https:\/\/note-api\.hxtao\.xyz'),
     new workbox.strategies.StaleWhileRevalidate({
         cacheName: 'cross-domain-cache',
         plugins: [
@@ -91,7 +88,7 @@ workbox.routing.registerRoute(
  * 离线缓存的能力
  */
 workbox.routing.registerRoute(
-    new RegExp('your-site.com'),
+    new RegExp('^https:\/\/note-manage\.hxtao\.xyz$'),
     new workbox.strategies.NetworkFirst()
 );
 
@@ -100,7 +97,7 @@ workbox.routing.registerRoute(
  * 
  * 直接强制使用正常的网络请求，并将结果返回给客户端，这种策略比较适合对实时性要求非常高的请求
  */
-workbox.routing.registerRoute(
-    new RegExp('immediate.com'),
-    new workbox.strategies.NetworkOnly()
-);
+// workbox.routing.registerRoute(
+//     new RegExp('immediate.com'),
+//     new workbox.strategies.NetworkOnly()
+// );
