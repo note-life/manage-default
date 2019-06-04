@@ -102,6 +102,6 @@ workbox.routing.registerRoute(
  */
 workbox.routing.registerRoute(
     new RegExp('immediate.com'),
-    workbox.strategies.networkOnly()
+    new workbox.strategies.NetworkOnly()
 );
 
