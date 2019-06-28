@@ -1,1 +1,1 @@
-export default 'api.note.life'
+export default '//api.note.life'
