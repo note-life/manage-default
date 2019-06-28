@@ -3,5 +3,10 @@
                 window.onload = function() {
                     navigator.serviceWorker.register('./sw.js');
                 }
+
+                if (localStorage.getItem('swInstalled') !== 'true') {
+                    localStorage.setItem('swInstalled', true);
+                    location.reload();
+                }
             }
         })();</script><link rel="shortcut icon" href=/favicon.ico><link href=/app.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript src=/app.js></script></body></html>

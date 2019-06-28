@@ -18,8 +18,7 @@ const admin = {
 // 当浏览器解析完 SW 文件时触发 install 事件
 self.addEventListener('install', function(e) {
     console.log('sw installed');
-    window.location.reload();
-    this.skipWaiting();
+    this.skipWaiting();``
 });
 
 // 激活时触发 activate 事件

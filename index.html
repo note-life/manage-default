@@ -13,6 +13,11 @@
                 window.onload = function() {
                     navigator.serviceWorker.register('./sw.js');
                 }
+
+                if (localStorage.getItem('swInstalled') !== 'true') {
+                    localStorage.setItem('swInstalled', true);
+                    location.reload();
+                }
             }
         })();
     </script>
