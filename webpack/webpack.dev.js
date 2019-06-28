@@ -19,7 +19,14 @@ module.exports = merge(baseWebpackConfig, {
         //     cert: fs.readFileSync(path.resolve(__dirname, '../cert.pem')),
         // },
         disableHostCheck: true,
-        historyApiFallback: true
+        historyApiFallback: true,
+        before: (app, server) => {
+            app.get('/sw.js', (req, res) => {
+                res.set('content-type', 'application/javascript');
+                fs.createReadStream('./src/sw.js').pipe(res);
+                // res.send(fs.createReadStream('./src/sw.js'));
+            })
+        }
     },
     module: {
         rules: [

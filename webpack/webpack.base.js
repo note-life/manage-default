@@ -44,12 +44,12 @@ const baseWebpackConfig = {
             },
         ]
     },
-    plugins: [
-        new InjectManifest({
-            swSrc: './src/sw.js',
-            swDest: 'sw.js'
-        })
-    ]
+    // plugins: [
+    //     new InjectManifest({
+    //         swSrc: './src/sw.js',
+    //         swDest: 'sw.js'
+    //     })
+    // ]
 };
 
 module.exports = baseWebpackConfig;
