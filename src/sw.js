@@ -18,6 +18,7 @@ const admin = {
 // 当浏览器解析完 SW 文件时触发 install 事件
 self.addEventListener('install', function(e) {
     console.log('sw installed');
+    window.location.reload();
     this.skipWaiting();
 });
 
@@ -28,8 +29,6 @@ self.addEventListener('activate', function(e) {
 
 self.addEventListener('fetch', function(e) {
     const { url, method } = e.request;
-
-    console.log('fetch...', url)
 
     if (/api\.note\.life/.test(url)) {
         console.log('fetch from sw --> :', method, url);
