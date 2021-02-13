@@ -38,7 +38,7 @@ class EmailMange extends React.Component {
         if (res.error) {
             message.error(res.error.message);
         } else {
-            const { _id, options, enabled } = res[0] || {};
+            const { _id, options, enabled } = res || {};
 
             this.setState({ _id, ...options, enabled });
         }
