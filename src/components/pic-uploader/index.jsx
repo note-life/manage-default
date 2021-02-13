@@ -60,7 +60,7 @@ class PicUploader extends React.Component {
         } else {
             const { host, paths } = res;
 
-            this.updateValue(`//${host}/${paths[0]}.webp`);
+            this.updateValue(`//${host}/${paths[0]}`);
         }
         this.setState({ uploading: false })
     }
@@ -80,7 +80,7 @@ class PicUploader extends React.Component {
                             </div>
                             <img src={base64 || value} />
                         </div>
-                        : <div className="empty"><input type="file" accept="image/jpeg, image/jpg, image/png, image/gif, image/webp" ref={(ref) => this.fileInput = ref} onChange={this.fileChange} /><i className="material-icons" onClick={this.handleDel}>cloud_upload</i></div>
+                        : <div className="empty"><input type="file" accept="image/jpeg, image/jpg, image/png, image/gif, image/webp, image/svg+xml, image/gif" ref={(ref) => this.fileInput = ref} onChange={this.fileChange} /><i className="material-icons" onClick={this.handleDel}>cloud_upload</i></div>
                 }
                 {uploading && <div className="uploading"><LinearProgress /></div>}
             </div>

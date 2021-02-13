@@ -8,11 +8,15 @@ import './index.pcss';
 
 class QiniuOSS extends React.Component {
     state = {
-        enabled: false
+        enabled: false,
+        options: {
+            acrive: null,
+            list: []
+        }
     }
 
     componentDidMount() {
-        this.fetchMailConfig();
+        this.fetchOSSConfig();
     }
 
     togglePassword = () => {
@@ -20,43 +24,71 @@ class QiniuOSS extends React.Component {
     }
 
     handleInput = (field, e) => {
-        this.setState({ [field]: e.target.value });
+        const activeData = this.state.options.list.find(v => v.type === 'qiniu-oss') || {};
+
+        activeData[field] =  e.target.value;
+        this.setState({ options: this.state.options });
     }
 
     handleEnabled = (e) => {
-        this.setState({ enabled: e.target.checked });
+        const { options, oldActive } = this.state;
+        const enabled = e.target.checked;
+
+        options.active = enabled ? 'qiniu-oss' : (oldActive === 'qiniu-oss' ? null : oldActive);
+        this.setState({ options });
     }
 
-    fetchMailConfig = async () => {
+    fetchOSSConfig = async () => {
         const headers = { ut: localStorage.getItem('ut') };
-        const res = await getData(`/configurations`, { key: 'QINIU_OSS' }, headers);
+        const res = await getData(`/configurations`, { key: 'OSS' }, headers);
 
         if (res.error) {
             message.error(res.error.message);
         } else {
-            const { _id, options, enabled } = res[0] || {};
+            const { _id, options } = res || {};
+            const activeData = options.list.find(v => v.type === 'qiniu-oss');
+            const emptyData = {
+                type: 'qiniu-oss',
+                accessKey : '',
+                secretKey: '',
+                scope: '',
+                domain: '',
+            };
 
-            this.setState({ _id, ...options, enabled });
+            console.log('activeData', activeData)
+
+            if (_id) {
+                if (!activeData) {
+                    options.list.push(emptyData);
+                }
+
+                this.setState({
+                    _id,
+                    options,
+                    oldActive: options.active
+                });
+            } else {
+                this.setState({
+                    options: {
+                        list: [emptyData]
+                    }
+                });
+            }
         }
     }
 
     handleSubmit = async (e) => {
         e.preventDefault();
 
-        const { accessKey, secretKey, scope, enabled, domain, _id } = this.state;
+        const { options, _id } = this.state;
         const headers = { ut: localStorage.getItem('ut') };
         const data = {
-            key: 'QINIU_OSS',
-            name: '七牛云对象储存',
+            key: 'OSS',
+            name: '对象储存',
             freeze: true,
             private: true,
-            enabled: enabled,
-            options: {
-                accessKey,
-                secretKey,
-                scope,
-                domain
-            }
+            enabled: true,
+            options
         };
         const res = _id ? await putJSON(`/configurations/${_id}`, data, headers) : await postJSON('/configurations', data, headers);
 
@@ -69,10 +101,11 @@ class QiniuOSS extends React.Component {
     }
 
     render() {
-        const { accessKey, secretKey, scope, domain, enabled = false, visible } = this.state;
+        const { visible, options } = this.state;
+        const activeData = options.list.find(v => v.type === 'qiniu-oss') || {};
 
         return (
-            <div className="email-manage">
+            <div className="oss-config">
                 <div className="help-tips">
                     七牛 Node.js SDK 的所有的功能，都需要合法的授权。授权凭证的签算需要七牛账号下的一对有效的<strong>Access Key</strong>和<strong>Secret Key</strong>，这对密钥可以通过如下步骤获得： 
                     <ul>
@@ -83,24 +116,25 @@ class QiniuOSS extends React.Component {
                 <form action="" onSubmit={this.handleSubmit}>
                     <div className="item">
                         <label htmlFor="">AccessKey:</label>
-                        <TextField type="text" value={accessKey || ''} onChange={this.handleInput.bind(null, 'accessKey')} />
+                        <TextField type="text" value={activeData.accessKey || ''} onChange={this.handleInput.bind(null, 'accessKey')} />
                     </div>
                     <div className="item">
                         <label htmlFor="">SecretKey:</label>
-                        <TextField value={secretKey || ''} type={visible ? 'text' : 'password'} onChange={this.handleInput.bind(null, 'secretKey')} />
+                        <TextField value={activeData.secretKey || ''} type={visible ? 'text' : 'password'} onChange={this.handleInput.bind(null, 'secretKey')} />
                         <span className="toggle-password" onClick={this.togglePassword}>{visible ? '隐藏' : '显示'}</span>
                     </div>
                     <div className="item">
                         <label htmlFor="">Scope:</label>
-                        <TextField value={scope || ''} placeholder="空间名称" onChange={this.handleInput.bind(null, 'scope')} />
+                        <TextField value={activeData.scope || ''} placeholder="空间名称" onChange={this.handleInput.bind(null, 'scope')} />
                     </div>
                     <div className="item">
                         <label htmlFor="">Domain:</label>
-                        <TextField value={domain || ''} placeholder="公开访问的域名" onChange={this.handleInput.bind(null, 'domain')} />
+                        <TextField value={activeData.domain || ''} placeholder="公开访问的域名" onChange={this.handleInput.bind(null, 'domain')} />
                     </div>
                     <div className="item">
                         <label htmlFor="">Enabled:</label>
-                        <Checkbox checked={enabled} onChange={this.handleEnabled} />
+                        <Checkbox checked={options.active === 'qiniu-oss'} onChange={this.handleEnabled} />
+                        启用后将禁用其它对象储存
                     </div>
                     <Button variant="contained" color="primary" type="submit">保存信息</Button>
                 </form>

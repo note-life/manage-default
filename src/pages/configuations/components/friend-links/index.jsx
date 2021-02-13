@@ -47,7 +47,7 @@ class FriendLinks extends PureComponent {
         if (res.error) {
             message.error(res.error.message);
         } else {
-            const { options = [], _id } = res[0] || {};
+            const { options = [], _id } = res || {};
 
             if (!_id) return;
 
